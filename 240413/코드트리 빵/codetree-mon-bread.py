@@ -10,7 +10,7 @@ class Person:
         self.now = (-1, -1)
 
     def set_camp(self, arr): # 처음 들어올 때 캠프 배정
-        d = [(-1, 0), (0, -1), (0, 1), (0, 1)]
+        d = [(-1, 0), (0, -1), (0, 1), (1, 0)]
         width = len(arr)
         visited = [[False] * width for _ in range(width)]
         queue = deque([self.target])
@@ -58,9 +58,8 @@ class Person:
 
 
 def arrange():
-    if to_arrange:
-        for x, y in to_arrange:
-            board[x][y] = 2
+    for x, y in to_arrange:
+        board[x][y] = 2
 
 
 read = sys.stdin.readline
