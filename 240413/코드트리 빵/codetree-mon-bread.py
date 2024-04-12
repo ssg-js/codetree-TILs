@@ -58,8 +58,9 @@ class Person:
 
 
 def arrange():
-    for x, y in to_arrange:
-        board[x][y] = 2
+    if to_arrange:
+        for x, y in to_arrange:
+            board[x][y] = 2
 
 
 read = sys.stdin.readline
