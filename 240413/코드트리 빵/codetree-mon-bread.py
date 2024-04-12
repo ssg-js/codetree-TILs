@@ -15,18 +15,31 @@ class Person:
         visited = [[False] * width for _ in range(width)]
         queue = deque([self.target])
         visited[self.target[0]][self.target[1]] = True
+        camp = []
         while queue:
-            x, y = queue.popleft()
-            for dx, dy in d:
-                nx, ny = x+dx, y+dy
-                if 0 <= nx < width and 0 <= ny < width and not visited[nx][ny]:
-                    if arr[nx][ny] == 0:
-                        queue.append((nx, ny))
-                        visited[nx][ny] = True
-                    elif arr[nx][ny] == 1: # 캠프 도착
-                        self.on_board = True
-                        self.now = (nx, ny)
-                        return nx, ny
+            end = False
+            for _ in range(len(queue)):
+                x, y = queue.popleft()
+                for dx, dy in d:
+                    nx, ny = x+dx, y+dy
+                    if 0 <= nx < width and 0 <= ny < width and not visited[nx][ny]:
+                        if arr[nx][ny] == 0:
+                            queue.append((nx, ny))
+                            visited[nx][ny] = True
+                        elif arr[nx][ny] == 1: # 캠프 도착
+                            end = True
+                            camp.append((nx, ny))
+            if end: # 비교
+                x, y = width, width
+                for cx, cy in camp:
+                    if cx < x:
+                        x, y = cx, cy
+                    elif cx == x:
+                        if cy < y:
+                            x, y = cx, cy
+                self.on_board = True
+                self.now = (x, y)
+                return x, y
 
     def move(self, arr): # on_board 후 이동, 편의점 도착 시 True, 아니면 False 반환
         d = [(-1, 0), (0, -1), (0, 1), (1, 0)]
